@@ -2,7 +2,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
 
 enable_language(CXX)
-enable_language(ASM)
+enable_language(ASM_NASM)
 
 set(CXX_FLAGS
 	-Wall
@@ -22,7 +22,8 @@ set(CXX_FLAGS
 )
 
 set(ASM_FLAGS
-	# TODO
+	-w-all
+	# FIXME suppress only "uninitialized space declared in non-BSS section" warnings
 )
 
 set(LINK_FLAGS
@@ -62,8 +63,10 @@ else()
 	message(FATAL_ERROR "Unknown build type: ${CMAKE_BUILD_TYPE}")
 endif()
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+
 set(SOURCES
-	# TODO
+	src/new.cpp
 )
 
 if(ARCH MATCHES x86_64)
@@ -84,7 +87,7 @@ add_executable(kernel ${SOURCES})
 target_compile_options(kernel
 	PRIVATE
 	$<$<COMPILE_LANGUAGE:CXX>:${CXX_FLAGS}>
-	$<$<COMPILE_LANGUAGE:ASM>:${ASM_FLAGS}>
+	$<$<COMPILE_LANGUAGE:ASM_NASM>:${ASM_FLAGS}>
 )
 target_link_options(kernel
 	PRIVATE
