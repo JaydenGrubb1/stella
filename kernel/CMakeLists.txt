@@ -69,7 +69,7 @@ set(SOURCES
 	src/new.cpp
 )
 
-if(ARCH MATCHES x86_64)
+if(STELLA_CPU_ARCH MATCHES x86_64)
 	add_definitions(-DARCH_x86_64)
 	add_subdirectory(src/arch/x86_64)
 	set(SOURCES
@@ -78,7 +78,7 @@ if(ARCH MATCHES x86_64)
 	)
 	set(LINKER_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/src/arch/x86_64/linker.ld)
 else()
-	message(FATAL_ERROR "Unsupported architecture: ${ARCH}")
+	message(FATAL_ERROR "Unsupported CPU architecture: ${STELLA_CPU_ARCH}")
 endif()
 
 set(CMAKE_EXECUTABLE_SUFFIX ".bin")

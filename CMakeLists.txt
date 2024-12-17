@@ -4,11 +4,13 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 cmake_minimum_required(VERSION 3.12)
 project(stella-os)
 
-if(NOT ARCH)
-	set(ARCH x86_64)
-endif()
+# Stella OS Configuration
+set(STELLA_CPU_ARCH x86_64 CACHE STRING "The CPU architecture to target")
+set(STELLA_BUILD_KERNEL ON CACHE BOOL "Build the kernel")
 
-add_subdirectory(kernel)
+if(STELLA_BUILD_KERNEL)
+	add_subdirectory(kernel)
+endif()
 
 add_custom_command(
 	OUTPUT ${CMAKE_BINARY_DIR}/initrd.img
